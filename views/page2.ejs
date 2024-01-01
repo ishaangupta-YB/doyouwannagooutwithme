@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Wanna Go Out With Me?</title>
+    <link rel="preload" href="https://media.giphy.com/media/3oz8xygX09cOcTmY9C/giphy.gif" as="image" type="image/gif">
+
+    <style>
+        body {
+            background: #f2bcde;
+            text-align: center;
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        h1 {
+            color: white;
+            font-size: 34px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(59, 8, 50, 0.7);
+            top: 0;
+            position: absolute;
+            margin-bottom: 8px;
+        }
+
+        img {
+            justify-content: center;
+            align-items: center;
+        }
+
+        #yesBtn {
+            background-color: #db8abd;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(99, 25, 86, 0.7);
+            position: absolute;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #noBtn {
+            background-color: #db8abd;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(99, 25, 86, 0.7);
+            transition: all 0.3s ease-in-out;
+            position: absolute;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #yesBtn:hover,
+        #noBtn:hover,
+        #shareBtn:hover {
+            transform: scale(1.1);
+        }
+
+        #shareBtn {
+            background-color: #f2bcde;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-right: 15px;
+            text-shadow: 2px 2px 4px rgba(59, 8, 50, 0.7);
+            font-size: 16px; 
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0;
+        }
+
+        #closeBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+        }
+
+        #shareForm {
+            display: none;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            text-align: center;
+        }
+
+        #shareFormContent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        #generateLinkBtn {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 50%;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 10px;
+        }
+
+        #generateLinkBtn:hover {
+            background-color: #45a049;
+        }
+
+        #generatedLink {
+            text-align: center;
+            color: #df58cd;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        #creditSection {
+            position: absolute;
+            bottom: 0px;
+            padding: 0px;
+            width: 100%;
+            margin: 0;
+            text-align: center;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        #creditSection p {
+            padding: 0px;
+            bottom: 0px;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                position: relative;
+            }
+
+            #creditSection {
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <% if(locals.name) {%>
+        <h1>Do You Wanna Go Out With Me<br><%= locals.name %>?</h1> 
+    <% }else{ %>
+        <h1>Do You Wanna Go Out With Me?</h1> 
+    <% } %>
+
+    <button id="shareBtn">tap to ask out your crush!</button>
+    <div>
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif"
+            alt="">
+    </div>
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+    <div id="shareForm">
+        <button id="closeBtn" onclick="closeShareForm()">✕</button>
+        <h2 style="color: #d457bf;">send it to your crush!</h2>
+        <form id="shareFormContent">
+            <input type="text" id="name" name="name" placeholder="Enter their name" required>
+            <button type="button" id="generateLinkBtn">Generate Link</button>
+            <a id="generatedLink" target="_blank" href="#"></a>
+        </form>
+    </div>
+
+    <div id="creditSection">
+        <p>Created with ❤️ by <a href="https://github.com/ishaangupta-YB" target="_blank"
+                style="color: rgb(0, 0, 0);">Ishaan Gupta</a>.&nbsp;&nbsp;&nbsp;Special thanks to <a
+                href="https://github.com/elifgazioglu" target="_blank" style="color: rgb(0, 0, 0);">Elif Gazioğlu</a>
+        </p>
+    </div>
+
+    <script> 
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+
+        noBtn.style.left = '60%';
+        noBtn.style.top = '83%';
+
+        yesBtn.style.left = '35%';
+        yesBtn.style.top = '83%';
+
+        function moveButton(btn) {
+            const maxX = window.innerWidth - btn.clientWidth;
+            const maxY = window.innerHeight - btn.clientHeight;
+
+            let randomX = Math.floor(Math.random() * maxX);
+            let randomY = Math.floor(Math.random() * maxY);
+
+            randomX = Math.max(0, Math.min(randomX, maxX));
+            randomY = Math.max(0, Math.min(randomY, maxY));
+
+            const yesBtnRect = yesBtn.getBoundingClientRect();
+            const noBtnRect = btn.getBoundingClientRect();
+
+            if (
+                noBtnRect.right > yesBtnRect.left &&
+                noBtnRect.left < yesBtnRect.right &&
+                noBtnRect.bottom > yesBtnRect.top &&
+                noBtnRect.top < yesBtnRect.bottom
+            ) {
+                randomX = Math.min(randomX, yesBtnRect.left - btn.clientWidth);
+                randomY = Math.min(randomY, yesBtnRect.top - btn.clientHeight);
+            }
+
+            // btn.style.position = 'absolute';
+            btn.style.left = `${randomX}px`;
+            btn.style.top = `${randomY}px`;
+        }
+
+        noBtn.addEventListener('click', () => {
+            moveButton(noBtn);
+        });
+
+        noBtn.addEventListener('mouseover', () => {
+            moveButton(noBtn);
+        });
+
+        yesBtn.addEventListener('click', () => {
+            window.location.href = '/congrats';
+        });
+
+        const shareBtn = document.getElementById('shareBtn');
+        const shareForm = document.getElementById('shareForm');
+        const generateLinkBtn = document.getElementById('generateLinkBtn');
+        const generatedLink = document.getElementById('generatedLink')
+
+        shareBtn.addEventListener('click', () => {
+            shareForm.style.display = 'block';
+        });
+
+        async function generateToken(name) {
+            const response = await fetch('/submitForm', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name }),
+            });
+
+            const result = await response.json();
+
+            if (result && response.ok) {
+                const tokenLink = window.location.origin + `/ask/${result.token}`;
+                generatedLink.href = tokenLink;
+                generatedLink.innerHTML = `<p>Share this link:</p><p><strong>${tokenLink}</strong></p>`;
+            } else {
+                generatedLink.href = "#";
+                generatedLink.innerHTML = 'Error generating token';
+                alert('Error generating token');
+            }
+        }
+
+        generateLinkBtn.addEventListener('click', async () => {
+            const name = document.getElementById('name').value;
+            if (!name.trim()) {
+                alert('please enter a name!');
+                return;
+            }
+            await generateToken(name);
+        });
+
+        function closeShareForm() {
+            shareForm.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
