@@ -2,18 +2,15 @@ const express = require('express');
 const path = require('path');
 const jwt = require('jsonwebtoken')
 const cors = require('cors');
-import { inject } from '@vercel/analytics';
-import { dev } from '$app/environment';
+const Analytics = require('@vercel/analytics');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config()
 
-inject({
-    mode: dev ? 'development' : 'production',
-  });
-  
+const analytics = new Analytics();
+
 const app = express();
 
-const secretKey = process.env.SECRET_KEY || 'keynotfound_lol'; 
+const secretKey = process.env.SECRET_KEY || 'keynotfound_lol';
 const PORT = process.env.PORT || 8080;
 
 const limiter = rateLimit({
@@ -28,6 +25,8 @@ const corsOptions = {
     credentials: true,
     optionsSuccessStatus: 204,
 };
+
+app.use(analytics.middleware());
 app.use(cors(corsOptions));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -45,6 +44,7 @@ function capitalizeName(sentence) {
 }
 
 app.get('/', (req, res) => {
+    analytics.trackPageView(req.url);
     res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
@@ -62,6 +62,7 @@ app.get('/ask/:token', (req, res) => {
 });
 
 app.get('/congrats', (req, res) => {
+    analytics.trackPageView(req.url);
     return res.status(200).sendFile(path.join(__dirname, 'public', 'congrats.html'))
 });
 
