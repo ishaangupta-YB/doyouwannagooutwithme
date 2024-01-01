@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const jwt = require('jsonwebtoken')
 const cors = require('cors');
+const analytics = require('@vercel/analytics');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config()
 
@@ -23,6 +24,7 @@ const corsOptions = {
     optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions));
+app.use(analytics());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
