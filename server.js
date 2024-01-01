@@ -16,13 +16,13 @@ const limiter = rateLimit({
     message: 'Too many tries! Please try after some time.',
 });
 
-// const corsOptions = {
-//     origin: 'https://your-vercel-app-url.vercel.app',
-//     methods: 'GET,POST',
-//     credentials: true,
-//     optionsSuccessStatus: 204,
-// };
-// app.use(cors(corsOptions));
+const corsOptions = {
+    origin: 'https://doyouwannagooutwithme-ig.vercel.app/',
+    methods: 'GET,POST',
+    credentials: true,
+    optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
