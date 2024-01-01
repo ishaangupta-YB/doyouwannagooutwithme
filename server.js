@@ -2,11 +2,8 @@ const express = require('express');
 const path = require('path');
 const jwt = require('jsonwebtoken')
 const cors = require('cors');
-const Analytics = require('@vercel/analytics');
 const rateLimit = require('express-rate-limit');
-require('dotenv').config()
-
-const analytics = new Analytics();
+require('dotenv').config() 
 
 const app = express();
 
@@ -26,7 +23,6 @@ const corsOptions = {
     optionsSuccessStatus: 204,
 };
 
-app.use(analytics.middleware());
 app.use(cors(corsOptions));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -44,7 +40,6 @@ function capitalizeName(sentence) {
 }
 
 app.get('/', (req, res) => {
-    analytics.trackPageView(req.url);
     res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
@@ -62,7 +57,6 @@ app.get('/ask/:token', (req, res) => {
 });
 
 app.get('/congrats', (req, res) => {
-    analytics.trackPageView(req.url);
     return res.status(200).sendFile(path.join(__dirname, 'public', 'congrats.html'))
 });
 
